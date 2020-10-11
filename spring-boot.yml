@@ -1,13 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jhooq-pod-with-pvc
-  labels:
-    name: jhooq-pod-with-pvc
+  name: jhooq-springboot
 spec:
-  containers:
-  - name: jhooq-pod-with-pvc
-    image: rahulwagh17/kubernetes:jhooq-k8s-springboot
-    ports:
-      - containerPort: 8080
-        name: www
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jhooq-springboot
+  template:
+    metadata:
+      labels:
+        app: jhooq-springboot
+    spec:
+      containers:
+      - name: springboot
+        image: rahulwagh17/kubernetes:jhooq-k8s-springboot
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
